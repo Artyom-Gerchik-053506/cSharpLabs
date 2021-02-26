@@ -53,7 +53,6 @@ namespace LAB1
         {
             int indexOfCountry = avaliableCountries.FindIndex(countryToFind =>
                 countryToFind.Equals(countryToUse, StringComparison.OrdinalIgnoreCase));
-
             if (indexOfCountry != -1)
             {
                 usedCountries.Add(avaliableCountries[indexOfCountry]);
@@ -65,9 +64,7 @@ namespace LAB1
         {
             Random rand = new Random();
             int countryIndex = rand.Next(0, avaliableCountries.Count);
-
             string localGenerateRandomCountry = avaliableCountries[countryIndex];
-
             return localGenerateRandomCountry;
         }
 
@@ -75,7 +72,6 @@ namespace LAB1
         {
             string lastChar = lastShownCountry.Substring(lastShownCountry.Length - 1, 1);
             string firstChar = countryToAnalyze.Substring(0, 1);
-
             if (lastChar.ToLower() != firstChar.ToLower())
             {
                 return CountryAnalysisState.FirstLetterDoNotMatchLastLetter;
@@ -111,10 +107,8 @@ namespace LAB1
             else
             {
                 string lastChar = lastShownCountry.Substring(lastShownCountry.Length - 1, 1);
-
                 int lastSymbolCountry = avaliableCountries.FindIndex(countryToFind =>
                     countryToFind.StartsWith(lastChar, StringComparison.OrdinalIgnoreCase));
-
                 if (lastSymbolCountry == -1)
                 {
                     GameState = GameState.ComputerCannotFindCountry;
@@ -128,7 +122,6 @@ namespace LAB1
 
             MoveToUsedCountries(localSelectNextCountry);
             lastShownCountry = localSelectNextCountry;
-
             return localSelectNextCountry;
         }
 
@@ -146,17 +139,14 @@ namespace LAB1
                     Console.WriteLine("Country Used");
                     isUserCountryIncorrect = true;
                     break;
-
                 case CountryAnalysisState.NoSuchCountry:
                     Console.WriteLine("NoSuchCountry");
                     isUserCountryIncorrect = true;
                     break;
-
                 case CountryAnalysisState.FirstLetterDoNotMatchLastLetter:
                     Console.WriteLine("FirstLetterDoNotMatchLastLetter");
                     isUserCountryIncorrect = true;
                     break;
-
                 case CountryAnalysisState.Ok:
                     //to select next country by computer
                     isUserCountryIncorrect = false;
@@ -174,7 +164,6 @@ namespace LAB1
 
             return isUserCountryIncorrect;
         }
-
 
         class Program
         {
@@ -196,7 +185,7 @@ namespace LAB1
                 //10 scan array of countries for first letters set
                 //11 hints (???)
                 //12 levels (Countries -> Capitals -> etc.)
-
+                
                 CountryBrain countriesBrain = new CountryBrain();
                 while (true)
                 {
@@ -214,7 +203,6 @@ namespace LAB1
                                 Console.WriteLine(
                                     "Wrong Country. Try Again. Lifes left: " + countriesBrain.CountOfTries);
                             }
-
                             break;
                         case GameState.UserNumberOfTriesEnded:
                             Console.WriteLine("U Loose. As NumberOFTriesEnded");
