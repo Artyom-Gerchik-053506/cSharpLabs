@@ -7,7 +7,7 @@ namespace LAB1
 {
     enum CountryAnalysisState
     {
-        OK,
+        Ok,
         FirstLetterDoNotMatchLastLetter,
         CountryUsed,
         NoSuchCountry
@@ -25,31 +25,31 @@ namespace LAB1
 
     class CountryBrain
     {
-        public void loadCountriesFromFile(string fileName)
+        public void LoadCountriesFromFile(string fileName)
         {
             avaliableCountries = File.ReadAllLines(fileName).ToList();
             if (avaliableCountries.Count == 0)
             {
-                gameState = GameState.Error;
+                GameState = GameState.Error;
             }
             else
             {
-                gameState = GameState.ComputerTurn;
+                GameState = GameState.ComputerTurn;
             }
         }
 
         private List<string> avaliableCountries = new List<string> { };
         private List<string> usedCountries = new List<string> { };
         private string lastShownCountry;
-        public int countOfTries { get; private set; } = 3;
+        public int CountOfTries { get; private set; } = 3;
 
-        private bool isUserHaveAnyTries()
+        private bool IsUserHaveAnyTries()
         {
-            countOfTries--;
-            return countOfTries > 0;
+            CountOfTries--;
+            return CountOfTries > 0;
         }
 
-        private void moveToUsedCountries(string countryToUse)
+        private void MoveToUsedCountries(string countryToUse)
         {
             int indexOfCountry = avaliableCountries.FindIndex(countryToFind =>
                 countryToFind.Equals(countryToUse, StringComparison.OrdinalIgnoreCase));
@@ -61,7 +61,7 @@ namespace LAB1
             }
         }
 
-        private string generateRandomCountry()
+        private string GenerateRandomCountry()
         {
             Random rand = new Random();
             int countryIndex = rand.Next(0, avaliableCountries.Count);
@@ -71,7 +71,7 @@ namespace LAB1
             return localGenerateRandomCountry;
         }
 
-        private CountryAnalysisState compare(string countryToAnalyze)
+        private CountryAnalysisState Compare(string countryToAnalyze)
         {
             string lastChar = lastShownCountry.Substring(lastShownCountry.Length - 1, 1);
             string firstChar = countryToAnalyze.Substring(0, 1);
@@ -93,20 +93,20 @@ namespace LAB1
                 return CountryAnalysisState.NoSuchCountry;
             }
 
-            moveToUsedCountries(countryToAnalyze);
+            MoveToUsedCountries(countryToAnalyze);
             lastShownCountry = countryToAnalyze;
-            return CountryAnalysisState.OK;
+            return CountryAnalysisState.Ok;
         }
 
-        public GameState gameState = GameState.LoadingLevel;
+        public GameState GameState = GameState.LoadingLevel;
 
-        public string selectNextCountry()
+        public string SelectNextCountry()
         {
             string localSelectNextCountry = "";
             if (lastShownCountry == null)
             {
-                localSelectNextCountry = generateRandomCountry();
-                gameState = GameState.UserTurn;
+                localSelectNextCountry = GenerateRandomCountry();
+                GameState = GameState.UserTurn;
             }
             else
             {
@@ -117,22 +117,22 @@ namespace LAB1
 
                 if (lastSymbolCountry == -1)
                 {
-                    gameState = GameState.ComputerCannotFindCountry;
+                    GameState = GameState.ComputerCannotFindCountry;
                 }
                 else
                 {
                     localSelectNextCountry = avaliableCountries[lastSymbolCountry];
-                    gameState = GameState.UserTurn;
+                    GameState = GameState.UserTurn;
                 }
             }
 
-            moveToUsedCountries(localSelectNextCountry);
+            MoveToUsedCountries(localSelectNextCountry);
             lastShownCountry = localSelectNextCountry;
 
             return localSelectNextCountry;
         }
 
-        public bool isUserCountryIncorrect(string userInput)
+        public bool IsUserCountryIncorrect(string userInput)
         {
             bool isUserCountryIncorrect = true;
             if (String.IsNullOrEmpty(userInput))
@@ -140,7 +140,7 @@ namespace LAB1
                 return isUserCountryIncorrect;
             }
 
-            switch (compare(userInput))
+            switch (Compare(userInput))
             {
                 case CountryAnalysisState.CountryUsed:
                     Console.WriteLine("Country Used");
@@ -157,18 +157,18 @@ namespace LAB1
                     isUserCountryIncorrect = true;
                     break;
 
-                case CountryAnalysisState.OK:
+                case CountryAnalysisState.Ok:
                     //to select next country by computer
                     isUserCountryIncorrect = false;
-                    gameState = GameState.ComputerTurn;
+                    GameState = GameState.ComputerTurn;
                     break;
             }
 
             if (isUserCountryIncorrect)
             {
-                if (isUserHaveAnyTries() == false)
+                if (IsUserHaveAnyTries() == false)
                 {
-                    gameState = GameState.UserNumberOfTriesEnded;
+                    GameState = GameState.UserNumberOfTriesEnded;
                 }
             }
 
@@ -200,19 +200,19 @@ namespace LAB1
                 CountryBrain countriesBrain = new CountryBrain();
                 while (true)
                 {
-                    switch (countriesBrain.gameState)
+                    switch (countriesBrain.GameState)
                     {
                         case GameState.ComputerTurn:
-                            Console.WriteLine("My Country: " + countriesBrain.selectNextCountry());
+                            Console.WriteLine("My Country: " + countriesBrain.SelectNextCountry());
                             break;
                         case GameState.UserTurn:
                             Console.WriteLine("Your Country: ");
                             string userInput = "";
                             userInput = Console.ReadLine();
-                            if (countriesBrain.isUserCountryIncorrect(userInput))
+                            if (countriesBrain.IsUserCountryIncorrect(userInput))
                             {
                                 Console.WriteLine(
-                                    "Wrong Country. Try Again. Lifes left: " + countriesBrain.countOfTries);
+                                    "Wrong Country. Try Again. Lifes left: " + countriesBrain.CountOfTries);
                             }
 
                             break;
@@ -227,7 +227,7 @@ namespace LAB1
                         case GameState.LoadingLevel:
                             Console.WriteLine("Loading Level From File. Please Wait.");
                             string fileName = "countries.txt";
-                            countriesBrain.loadCountriesFromFile(fileName);
+                            countriesBrain.LoadCountriesFromFile(fileName);
                             break;
                         case GameState.Error:
                             Console.WriteLine("Some Error. Need Debug. Stop procces.");
