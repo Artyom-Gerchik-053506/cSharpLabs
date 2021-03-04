@@ -18,16 +18,16 @@ namespace LAB2
             List<string> splittedUserInput = userInput.Split(" ").ToList();
             List<string> convertAll = splittedUserInput.ConvertAll(inputString =>
             {
-                Console.WriteLine("Trying To Convert to Decimal: " + inputString);
+                Console.WriteLine($"Trying To Convert to Decimal: {inputString}" );
                 try
                 {
                     long intValueTest = Convert.ToInt64(inputString, 16);
-                    Console.WriteLine("Result Of Convertion: " + intValueTest);
+                    Console.WriteLine($"Result Of Convertion: {intValueTest}");
                     return intValueTest.ToString();
                 }
                 catch
                 {
-                    Console.WriteLine("Word Is Not Hexadecimal Returning As Is: ");
+                    Console.WriteLine("Word Is Not Hexadecimal Returning As Is.");
                     return inputString;
                 }
             });

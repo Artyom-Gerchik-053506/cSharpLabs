@@ -9,10 +9,10 @@ namespace LAB2
         {
             StringBuilder stb = new StringBuilder();
             stb.Append("Please, Select Task: \n");
-            stb.Append("0 - " + Task.Description() + '\n');
-            stb.Append("1 - " + Task1.Description() + '\n');
-            stb.Append("2 - " + Task2.Description() + '\n');
-            stb.Append("3 - " + Task3.Description());
+            stb.Append($"0 - {Task.Description()} \n");
+            stb.Append($"1 - {Task1.Description()} \n");
+            stb.Append($"2 - {Task2.Description()} \n");
+            stb.Append($"3 - {Task3.Description()}");
             Console.WriteLine(stb.ToString());
             while (true)
             {
