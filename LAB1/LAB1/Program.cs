@@ -41,7 +41,7 @@ namespace LAB1
         private List<string> avaliableCountries = new List<string> { };
         private List<string> usedCountries = new List<string> { };
         private string lastShownCountry;
-        public int CountOfTries { get; private set; } = 3;
+        public int CountOfTries = 3;
 
         private bool IsUserHaveAnyTries()
         {
@@ -185,14 +185,13 @@ namespace LAB1
                 //10 scan array of countries for first letters set
                 //11 hints (???)
                 //12 levels (Countries -> Capitals -> etc.)
-                
                 CountryBrain countriesBrain = new CountryBrain();
                 while (true)
                 {
                     switch (countriesBrain.GameState)
                     {
                         case GameState.ComputerTurn:
-                            Console.WriteLine("My Country: " + countriesBrain.SelectNextCountry());
+                            Console.WriteLine($"My Country: {countriesBrain.SelectNextCountry()}");
                             break;
                         case GameState.UserTurn:
                             Console.WriteLine("Your Country: ");
@@ -201,8 +200,9 @@ namespace LAB1
                             if (countriesBrain.IsUserCountryIncorrect(userInput))
                             {
                                 Console.WriteLine(
-                                    "Wrong Country. Try Again. Lifes left: " + countriesBrain.CountOfTries);
+                                    $"Wrong Country. Try Again. Lifes left: {countriesBrain.CountOfTries}");
                             }
+
                             break;
                         case GameState.UserNumberOfTriesEnded:
                             Console.WriteLine("U Loose. As NumberOFTriesEnded");
