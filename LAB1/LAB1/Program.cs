@@ -200,7 +200,7 @@ namespace LAB1
                             if (countriesBrain.IsUserCountryIncorrect(userInput))
                             {
                                 Console.WriteLine(
-                                    $"Wrong Country. Try Again. Lifes left: {countriesBrain.CountOfTries}");
+                                    $"Wrong Country. Try Again. Lifes left: {countriesBrain.CountOfTries.ToString()}");
                             }
 
                             break;

@@ -22,7 +22,7 @@ namespace LAB2
                 try
                 {
                     long intValueTest = Convert.ToInt64(inputString, 16);
-                    Console.WriteLine($"Result Of Convertion: {intValueTest}");
+                    Console.WriteLine($"Result Of Convertion: {intValueTest.ToString()}");
                     return intValueTest.ToString();
                 }
                 catch

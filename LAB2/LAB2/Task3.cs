@@ -17,7 +17,7 @@ namespace LAB2
             List<CultureInfo> culturesList = CultureInfo.GetCultures(CultureTypes.AllCultures).ToList();
             List<string> culturesArray = culturesList.Select(delegate(CultureInfo culture, int index)
             {
-                return   $"{index} {culture.EnglishName}";
+                return   $"{index.ToString()} {culture.EnglishName}";
             }).ToList();
             Console.WriteLine(string.Join(", \n", culturesArray));
             Console.WriteLine("Write Index of Culture To Show Current Date: ");
