@@ -28,15 +28,14 @@ namespace LAB3
         public Position BestPlayingPosition { get; set; }
         public double Sprint100Meters { get; set; }
 
-        public new string Description(bool showAge)
-        {
-            return
-                $"{base.Description(showAge)}\nClass Description {ID}: Position: {BestPlayingPosition.ToString("G")}, Sprint 100 Meters: {Sprint100Meters.ToString()}, Number on T-Shirt: {NumberOnTShirt.ToString()}";
-        }
-
         public new string Description()
         {
             return Description(showAge: false);
+        }
+        public override string Description(bool showAge)
+        {
+            return
+                $"{base.Description(showAge)}\nClass Description {ID}: Position: {BestPlayingPosition.ToString("G")}, Sprint 100 Meters: {Sprint100Meters.ToString()}, Number on T-Shirt: {NumberOnTShirt.ToString()}";
         }
     }
 }

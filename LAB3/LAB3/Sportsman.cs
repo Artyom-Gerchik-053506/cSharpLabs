@@ -30,7 +30,7 @@ namespace LAB3
             return Description(showAge: false);
         }
 
-        public new string Description(bool showAge)
+        public override string Description(bool showAge)
         {
             return $"{base.Description(showAge)}\nClass Description {ID}: Salary: {Salary.ToString()}";
         }

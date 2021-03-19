@@ -11,7 +11,7 @@ namespace LAB3
             return $"Class Description {ID}: Name: {Name}";
         }
 
-        public string Description(bool showAge)
+        public virtual string Description(bool showAge)
         {
             if (showAge)
             {
