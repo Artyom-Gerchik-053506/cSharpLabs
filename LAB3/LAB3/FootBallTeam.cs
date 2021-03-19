@@ -5,12 +5,12 @@ namespace LAB3
     public class FootBallTeam
     {
         public const int numberOfPlayers = 30;
+
         public FootBallPlayer[] Players;
         //add if need
         /*public Sportsman[] Coaches;
         public Human[] Doctors;
         public Human[] Managers;*/
-       
 
         public FootBallTeam(string name)
         {
@@ -34,7 +34,8 @@ namespace LAB3
         {
             Console.WriteLine($"Name Of Team: {Name}\n");
             //info about footballists
-            for (var index = 0; index < numberOfPlayers; index++) Console.WriteLine($"{this[index].Description(showAge)}\n");
+            for (var index = 0; index < numberOfPlayers; index++)
+                Console.WriteLine($"{this[index].Description(showAge)}\n");
         }
     }
 }

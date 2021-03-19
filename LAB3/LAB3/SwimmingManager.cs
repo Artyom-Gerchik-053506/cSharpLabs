@@ -20,7 +20,7 @@ namespace LAB3
                 //inserting a negative values to check property works good.
                 var randomSalary = random.Next(-1000, 3000);
                 var randomNameIndex = random.Next(0, ArrayOfRandomNamesForGenerate.Length - 1);
-                var swimmer = new Swimmer(ArrayOfRandomNamesForGenerate[randomNameIndex], randomAge,randomSalary);
+                var swimmer = new Swimmer(ArrayOfRandomNamesForGenerate[randomNameIndex], randomAge, randomSalary);
                 swimmer[Swimmer.SwimmingStyle.Freestyle] = Math.Round(randomFreestyle + 0.5, 2);
                 swimmer[Swimmer.SwimmingStyle.Butterfly] = Math.Round(randomButterfly + 0.6, 2);
                 arrayOfSwimmers[index] = swimmer;

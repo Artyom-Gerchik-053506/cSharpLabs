@@ -3,6 +3,7 @@ namespace LAB3
     public class Sportsman : Human
     {
         public new static string ID => nameof(Sportsman);
+
         //this is a field.
         private int _salary;
 

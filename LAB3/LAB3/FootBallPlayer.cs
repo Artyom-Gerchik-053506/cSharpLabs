@@ -24,7 +24,6 @@ namespace LAB3
         }
 
         public new static string ID => nameof(FootBallPlayer);
-
         public int NumberOnTShirt { get; set; }
         public Position BestPlayingPosition { get; set; }
         public double Sprint100Meters { get; set; }
@@ -34,6 +33,7 @@ namespace LAB3
             return
                 $"{base.Description(showAge)}\nClass Description {ID}: Position: {BestPlayingPosition.ToString("G")}, Sprint 100 Meters: {Sprint100Meters.ToString()}, Number on T-Shirt: {NumberOnTShirt.ToString()}";
         }
+
         public new string Description()
         {
             return Description(showAge: false);

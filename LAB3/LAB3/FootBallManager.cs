@@ -36,9 +36,9 @@ namespace LAB3
 
         public string PlayVersus(FootBallTeam team1, FootBallTeam team2)
         {
-            var rnd = new Random();
-            var team1Goals = rnd.Next(0, 5);
-            var team2Goals = rnd.Next(0, 5);
+            var randomScore = new Random();
+            var team1Goals = randomScore.Next(0, 5);
+            var team2Goals = randomScore.Next(0, 5);
             return $"Score Is: {team1Goals.ToString()}:{team2Goals.ToString()}";
         }
 
@@ -86,12 +86,26 @@ namespace LAB3
 
                         break;
                     case "2":
-                        if (state == State.TeamsGenerated) team1.Description(true);
-                        else Console.WriteLine("Wrong Input.");
+                        if (state == State.TeamsGenerated)
+                        {
+                            team1.Description(true);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Wrong Input.");
+                        }
+
                         break;
                     case "3":
-                        if (state == State.TeamsGenerated) team2.Description(true);
-                        else Console.WriteLine("Wrong Input.");
+                        if (state == State.TeamsGenerated)
+                        {
+                            team2.Description(true);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Wrong Input.");
+                        }
+
                         break;
                     default:
                         Console.WriteLine("Wrong Input.");
