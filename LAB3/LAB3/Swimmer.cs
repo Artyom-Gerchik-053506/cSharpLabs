@@ -12,8 +12,18 @@ namespace LAB3
             // add more
         }
 
+        public struct Anthropology
+        {
+            public double footSize;
+            public double palmSize;
+            public double lungVolume;
+            public double shoulderWidth;
+        }
+
         private readonly double[] swimmingStyleTiming100Meters =
             new double[Enum.GetValues(typeof(SwimmingStyle)).Length];
+
+        public Anthropology SwimmerAnthropology;
 
         public Swimmer(string name, int age, int salary)
         {
@@ -32,13 +42,22 @@ namespace LAB3
 
         public new string Description()
         {
-            return Description(showAge: false);
+            return Description(descriptionInfoState.Default);
         }
 
-        public override string Description(bool showAge)
+        public override string Description(descriptionInfoState state)
         {
-            return
-                $"{base.Description(showAge)}\nClass Description {ID}: 100 Meters ButterFly: {this[SwimmingStyle.Butterfly].ToString()}, 100 Meters FreeStyle: {this[SwimmingStyle.Freestyle].ToString()}";
+            return $"{base.Description(state)}\nClass Description {ID}: " +
+                   $"100 Meters ButterFly: {this[SwimmingStyle.Butterfly].ToString()}, " +
+                   $"100 Meters FreeStyle: {this[SwimmingStyle.Freestyle].ToString()},\n ";
+        }
+
+        protected override string specificInfo()
+        {
+            return $"\nAntropology metrics:\nFoot Size: {SwimmerAnthropology.footSize.ToString()},\n" +
+                   $"Palm Size: {SwimmerAnthropology.palmSize.ToString()},\n" +
+                   $"Lung Volume: {SwimmerAnthropology.lungVolume.ToString()},\n" +
+                   $"Shoulder Width: {SwimmerAnthropology.shoulderWidth.ToString()}.";
         }
     }
 }

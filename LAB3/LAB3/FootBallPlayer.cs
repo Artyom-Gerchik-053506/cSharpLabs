@@ -11,6 +11,16 @@ namespace LAB3
 
             //... add more...
         }
+        
+        public struct Anthropology
+        {
+            public double footSize;
+            public double jumpHeight;
+            public double jumpLength;
+            public int heartBeatAfter100MetersSprint;
+        }
+
+        public Anthropology FootBallPlayerAnthropology;
 
         public FootBallPlayer(string name, int numberOnTShirt, Position bestPlayingPosition, double sprint100Meters,
             int age, int salary)
@@ -30,12 +40,20 @@ namespace LAB3
 
         public new string Description()
         {
-            return Description(showAge: false);
+            return Description(descriptionInfoState.Default);
         }
-        public override string Description(bool showAge)
+        public override string Description(descriptionInfoState state)
         {
             return
-                $"{base.Description(showAge)}\nClass Description {ID}: Position: {BestPlayingPosition.ToString("G")}, Sprint 100 Meters: {Sprint100Meters.ToString()}, Number on T-Shirt: {NumberOnTShirt.ToString()}";
+                $"{base.Description(state)}\nClass Description {ID}: Position: {BestPlayingPosition.ToString("G")}, Sprint 100 Meters: {Sprint100Meters.ToString()}, Number on T-Shirt: {NumberOnTShirt.ToString()}";
+        }
+        
+        protected override string specificInfo()
+        {
+            return $"\nAntropology metrics:\nFoot Size: {FootBallPlayerAnthropology.footSize.ToString()},\n" +
+                   $"Palm Size: {FootBallPlayerAnthropology.jumpHeight.ToString()},\n" +
+                   $"Lung Volume: {FootBallPlayerAnthropology.jumpLength.ToString()},\n" +
+                   $"Heart Beat After 100 Meters Sprint: {FootBallPlayerAnthropology.heartBeatAfter100MetersSprint.ToString()}.";
         }
     }
 }

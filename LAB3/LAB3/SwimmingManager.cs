@@ -9,6 +9,17 @@ namespace LAB3
         private State _state = State.Initial;
         private readonly Swimmer[] arrayOfSwimmers = new Swimmer[CountOfSwimmers];
 
+        private Swimmer.Anthropology generateRandomAntropology()
+        {
+            var random = new Random();
+            Swimmer.Anthropology anthropologyStruct;
+            anthropologyStruct.footSize = Math.Round(random.NextDouble(), 2);
+            anthropologyStruct.palmSize = Math.Round(random.NextDouble(), 2);
+            anthropologyStruct.lungVolume = Math.Round(random.NextDouble(), 2);
+            anthropologyStruct.shoulderWidth = Math.Round(random.NextDouble(), 2);
+            return anthropologyStruct;
+        }
+
         private void GenerateSwimmers()
         {
             for (var index = 0; index < CountOfSwimmers; index++)
@@ -21,6 +32,7 @@ namespace LAB3
                 var randomSalary = random.Next(-1000, 3000);
                 var randomNameIndex = random.Next(0, ArrayOfRandomNamesForGenerate.Length - 1);
                 var swimmer = new Swimmer(ArrayOfRandomNamesForGenerate[randomNameIndex], randomAge, randomSalary);
+                swimmer.SwimmerAnthropology = generateRandomAntropology();
                 swimmer[Swimmer.SwimmingStyle.Freestyle] = Math.Round(randomFreestyle + 0.5, 2);
                 swimmer[Swimmer.SwimmingStyle.Butterfly] = Math.Round(randomButterfly + 0.6, 2);
                 arrayOfSwimmers[index] = swimmer;
@@ -33,10 +45,10 @@ namespace LAB3
                 Console.WriteLine($"{arrayOfSwimmers[index].Description()}\n");
         }
 
-        private void InfoAboutSwimmers(bool showAge)
+        private void InfoAboutSwimmers(Human.descriptionInfoState state)
         {
             for (var index = 0; index < CountOfSwimmers; index++)
-                Console.WriteLine($"{arrayOfSwimmers[index].Description(showAge)}\n");
+                Console.WriteLine($"{arrayOfSwimmers[index].Description(state)}\n");
         }
 
         private void ShowUserMenu()
@@ -51,8 +63,9 @@ namespace LAB3
                     Console.WriteLine("0 - Back");
                     Console.WriteLine("1 - Info About Swimmers");
                     Console.WriteLine("2 - Info About Swimmers With Age");
-                    Console.WriteLine("3 - Perform Swim FreeStyle");
-                    Console.WriteLine("4 - Perform Swim ButterFly");
+                    Console.WriteLine("3 - Anthropology Metrics");
+                    Console.WriteLine("4 - Perform Swim FreeStyle");
+                    Console.WriteLine("5 - Perform Swim ButterFly");
                     break;
             }
         }
@@ -93,7 +106,7 @@ namespace LAB3
                     case "2":
                         if (_state == State.SwimmersAreReady)
                         {
-                            InfoAboutSwimmers(true);
+                            InfoAboutSwimmers(Human.descriptionInfoState.ShowAge);
                         }
                         else
                         {
@@ -104,7 +117,7 @@ namespace LAB3
                     case "3":
                         if (_state == State.SwimmersAreReady)
                         {
-                            SwimWithChoosenStyle(Swimmer.SwimmingStyle.Freestyle);
+                            InfoAboutSwimmers(Human.descriptionInfoState.SpecificInfo);
                         }
                         else
                         {
@@ -113,6 +126,17 @@ namespace LAB3
 
                         break;
                     case "4":
+                        if (_state == State.SwimmersAreReady)
+                        {
+                            SwimWithChoosenStyle(Swimmer.SwimmingStyle.Freestyle);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Wrong Input");
+                        }
+
+                        break;
+                    case "5":
                         if (_state == State.SwimmersAreReady)
                         {
                             SwimWithChoosenStyle(Swimmer.SwimmingStyle.Butterfly);

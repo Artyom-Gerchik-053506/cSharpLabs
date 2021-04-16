@@ -1,7 +1,14 @@
 namespace LAB3
 {
-    public class Human
+    public abstract class Human
     {
+        public enum descriptionInfoState
+        {
+            Default,
+            ShowAge,
+            SpecificInfo
+        }
+
         public static string ID => nameof(Human);
         public string Name { get; set; }
         public int Age { get; set; }
@@ -11,14 +18,24 @@ namespace LAB3
             return $"Class Description {ID}: Name: {Name}";
         }
 
-        public virtual string Description(bool showAge)
+        protected abstract string specificInfo();
+
+        public virtual string Description(descriptionInfoState state)
         {
-            if (showAge)
+            switch (state)
             {
-                return $"{Description()}, Age: {Age.ToString()}";
+                case descriptionInfoState.Default:
+                    return Description();
+                    break;
+                case descriptionInfoState.ShowAge:
+                    return $"{Description()}, Age: {Age.ToString()}";
+                    break;
+                case descriptionInfoState.SpecificInfo:
+                    return $"{Description()}, {specificInfo()}";
+                    break;
             }
 
-            return Description();
+            return null;
         }
     }
 }

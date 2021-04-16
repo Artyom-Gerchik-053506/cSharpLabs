@@ -30,12 +30,12 @@ namespace LAB3
             set => Players[index] = value;
         }
 
-        public void Description(bool showAge)
+        public void Description(Human.descriptionInfoState state)
         {
             Console.WriteLine($"Name Of Team: {Name}\n");
             //info about footballists
             for (var index = 0; index < numberOfPlayers; index++)
-                Console.WriteLine($"{this[index].Description(showAge)}\n");
+                Console.WriteLine($"{this[index].Description(state)}\n");
         }
     }
 }

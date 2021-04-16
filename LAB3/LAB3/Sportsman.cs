@@ -27,12 +27,17 @@ namespace LAB3
 
         public new string Description()
         {
-            return Description(showAge: false);
+            return Description(descriptionInfoState.Default);
         }
 
-        public override string Description(bool showAge)
+        public override string Description(descriptionInfoState state)
         {
-            return $"{base.Description(showAge)}\nClass Description {ID}: Salary: {Salary.ToString()}";
+            return $"{base.Description(state)}\nClass Description {ID}: Salary: {Salary.ToString()}";
+        }
+
+        protected override string specificInfo()
+        {
+            return "";
         }
     }
 }

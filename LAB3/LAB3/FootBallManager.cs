@@ -15,6 +15,17 @@ namespace LAB3
             return (FootBallPlayer.Position) tempPosition;
         }
 
+        private FootBallPlayer.Anthropology generateRandomAntropology()
+        {
+            var random = new Random();
+            FootBallPlayer.Anthropology anthropologyStruct;
+            anthropologyStruct.footSize = Math.Round(random.NextDouble(), 2);
+            anthropologyStruct.jumpHeight = Math.Round(random.NextDouble(), 2);
+            anthropologyStruct.jumpLength = Math.Round(random.NextDouble(), 2);
+            anthropologyStruct.heartBeatAfter100MetersSprint = random.Next(60, 140);
+            return anthropologyStruct;
+        }
+
         private FootBallTeam GenerateRandomTeam(string Name)
         {
             var Team = new FootBallTeam(Name);
@@ -28,6 +39,7 @@ namespace LAB3
                 var randomNameIndex = random.Next(0, ArrayOfRandomNamesForGenerate.Length - 1);
                 var player = new FootBallPlayer($"{ArrayOfRandomNamesForGenerate[randomNameIndex]}", index,
                     GenerateRandomPosition(), Math.Round(randomSprint100Meters * 10 + 5, 2), randomAge, randomSalary);
+                player.FootBallPlayerAnthropology = generateRandomAntropology();
                 Team[index] = player;
             }
 
@@ -55,6 +67,8 @@ namespace LAB3
                     Console.WriteLine("1 - Play");
                     Console.WriteLine("2 - Info About First Team");
                     Console.WriteLine("3 - Info About Second Team");
+                    Console.WriteLine("4 - Info About First Team & Antropology Metrics");
+                    Console.WriteLine("5 - Info About Second Team & Antropology Metrics");
                     break;
             }
         }
@@ -88,7 +102,7 @@ namespace LAB3
                     case "2":
                         if (state == State.TeamsGenerated)
                         {
-                            team1.Description(true);
+                            team1.Description(Human.descriptionInfoState.ShowAge);
                         }
                         else
                         {
@@ -99,7 +113,29 @@ namespace LAB3
                     case "3":
                         if (state == State.TeamsGenerated)
                         {
-                            team2.Description(true);
+                            team2.Description(Human.descriptionInfoState.ShowAge);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Wrong Input.");
+                        }
+
+                        break;
+                    case "4":
+                        if (state == State.TeamsGenerated)
+                        {
+                            team1.Description(Human.descriptionInfoState.SpecificInfo);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Wrong Input.");
+                        }
+
+                        break;
+                    case "5":
+                        if (state == State.TeamsGenerated)
+                        {
+                            team2.Description(Human.descriptionInfoState.SpecificInfo);
                         }
                         else
                         {
