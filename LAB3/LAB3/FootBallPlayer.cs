@@ -1,7 +1,22 @@
+using System;
+
 namespace LAB3
 {
-    public class FootBallPlayer : Sportsman
+    public class FootBallPlayer : Sportsman, IMyOwnInterfaceForFootBallPlayers
     {
+        public bool Stumbled()
+        {
+            var random = new Random();
+            if (random.Next(0, 2) == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public enum Position
         {
             Goalkeeper,
@@ -11,7 +26,7 @@ namespace LAB3
 
             //... add more...
         }
-        
+
         public struct Anthropology
         {
             public double footSize;
@@ -42,17 +57,18 @@ namespace LAB3
         {
             return Description(descriptionInfoState.Default);
         }
+
         public override string Description(descriptionInfoState state)
         {
             return
                 $"{base.Description(state)}\nClass Description {ID}: Position: {BestPlayingPosition.ToString("G")}, Sprint 100 Meters: {Sprint100Meters.ToString()}, Number on T-Shirt: {NumberOnTShirt.ToString()}";
         }
-        
+
         protected override string specificInfo()
         {
             return $"\nAntropology metrics:\nFoot Size: {FootBallPlayerAnthropology.footSize.ToString()},\n" +
-                   $"Palm Size: {FootBallPlayerAnthropology.jumpHeight.ToString()},\n" +
-                   $"Lung Volume: {FootBallPlayerAnthropology.jumpLength.ToString()},\n" +
+                   $"Jump Height: {FootBallPlayerAnthropology.jumpHeight.ToString()},\n" +
+                   $"Jump Length: {FootBallPlayerAnthropology.jumpLength.ToString()},\n" +
                    $"Heart Beat After 100 Meters Sprint: {FootBallPlayerAnthropology.heartBeatAfter100MetersSprint.ToString()}.";
         }
     }

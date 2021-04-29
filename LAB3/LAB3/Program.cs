@@ -17,7 +17,10 @@ namespace LAB3
                 Console.WriteLine("0 - Exit");
                 Console.WriteLine("1 - Swimming");
                 Console.WriteLine("2 - FootBall");
+                Console.WriteLine();
+                Console.Write("Your Choice: ");
                 var userInput = UserInput();
+                Console.WriteLine();
                 switch (userInput)
                 {
                     case "0":

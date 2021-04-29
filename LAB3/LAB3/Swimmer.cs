@@ -2,8 +2,21 @@ using System;
 
 namespace LAB3
 {
-    public class Swimmer : Sportsman
+    public class Swimmer : Sportsman, IMyOwnInterfaceForSwimmers
     {
+        public bool ChokedWithWater()
+        {
+            var random = new Random();
+            if (random.Next(0, 2) == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public enum SwimmingStyle
         {
             Freestyle,

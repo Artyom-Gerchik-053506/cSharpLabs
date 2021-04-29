@@ -8,6 +8,11 @@ namespace LAB3
         private FootBallTeam team1;
         private FootBallTeam team2;
 
+        public bool PerformInterface(IMyOwnInterfaceForFootBallPlayers myObject)
+        {
+            return myObject.Stumbled();
+        }
+
         private static FootBallPlayer.Position GenerateRandomPosition()
         {
             var randomPosition = new Random();
@@ -32,14 +37,19 @@ namespace LAB3
             for (var index = 0; index < FootBallTeam.numberOfPlayers; index++)
             {
                 var random = new Random();
-                var randomSprint100Meters = random.NextDouble();
+                var randomSprint100Meters = Math.Round(random.NextDouble() * 10 + 5, 2);
                 var randomAge = random.Next(16, 35);
                 //inserting a negative values to check property works good.
                 var randomSalary = random.Next(-1000, 3000);
-                var randomNameIndex = random.Next(0, ArrayOfRandomNamesForGenerate.Length - 1);
+                var randomNameIndex = random.Next(0, ArrayOfRandomNamesForGenerate.Count);
                 var player = new FootBallPlayer($"{ArrayOfRandomNamesForGenerate[randomNameIndex]}", index,
-                    GenerateRandomPosition(), Math.Round(randomSprint100Meters * 10 + 5, 2), randomAge, randomSalary);
+                    GenerateRandomPosition(), randomSprint100Meters, randomAge, randomSalary);
                 player.FootBallPlayerAnthropology = generateRandomAntropology();
+                if (PerformInterface(player))
+                {
+                    player.Sprint100Meters = 100500;
+                }
+
                 Team[index] = player;
             }
 

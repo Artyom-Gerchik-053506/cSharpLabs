@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace LAB3
@@ -8,6 +9,11 @@ namespace LAB3
         private const int CountOfSwimmers = 5;
         private State _state = State.Initial;
         private readonly Swimmer[] arrayOfSwimmers = new Swimmer[CountOfSwimmers];
+
+        private void SortBySalariesFromZeroToMax()
+        {
+            Array.Sort(arrayOfSwimmers, new SwimmersSlariesComparer());
+        }
 
         private Swimmer.Anthropology generateRandomAntropology()
         {
@@ -20,6 +26,11 @@ namespace LAB3
             return anthropologyStruct;
         }
 
+        public bool PerformInterface(IMyOwnInterfaceForSwimmers myObject)
+        {
+            return myObject.ChokedWithWater();
+        }
+
         private void GenerateSwimmers()
         {
             for (var index = 0; index < CountOfSwimmers; index++)
@@ -30,11 +41,20 @@ namespace LAB3
                 var randomAge = random.Next(16, 35);
                 //inserting a negative values to check property works good.
                 var randomSalary = random.Next(-1000, 3000);
-                var randomNameIndex = random.Next(0, ArrayOfRandomNamesForGenerate.Length - 1);
+                var randomNameIndex = random.Next(0, ArrayOfRandomNamesForGenerate.Count);
                 var swimmer = new Swimmer(ArrayOfRandomNamesForGenerate[randomNameIndex], randomAge, randomSalary);
                 swimmer.SwimmerAnthropology = generateRandomAntropology();
-                swimmer[Swimmer.SwimmingStyle.Freestyle] = Math.Round(randomFreestyle + 0.5, 2);
-                swimmer[Swimmer.SwimmingStyle.Butterfly] = Math.Round(randomButterfly + 0.6, 2);
+                if (PerformInterface(swimmer))
+                {
+                    swimmer[Swimmer.SwimmingStyle.Freestyle] = Math.Round(randomFreestyle + 5, 2);
+                    swimmer[Swimmer.SwimmingStyle.Butterfly] = Math.Round(randomButterfly + 6, 2);
+                }
+                else
+                {
+                    swimmer[Swimmer.SwimmingStyle.Freestyle] = Math.Round(randomFreestyle + 0.5, 2);
+                    swimmer[Swimmer.SwimmingStyle.Butterfly] = Math.Round(randomButterfly + 0.6, 2);
+                }
+
                 arrayOfSwimmers[index] = swimmer;
             }
         }
@@ -66,6 +86,7 @@ namespace LAB3
                     Console.WriteLine("3 - Anthropology Metrics");
                     Console.WriteLine("4 - Perform Swim FreeStyle");
                     Console.WriteLine("5 - Perform Swim ButterFly");
+                    Console.WriteLine("6 - Sort By Salaries From Zero To Max");
                     break;
             }
         }
@@ -84,7 +105,10 @@ namespace LAB3
             while (swimmingManagerControlsUserInput)
             {
                 ShowUserMenu();
+                Console.WriteLine();
+                Console.Write("Your Choice: ");
                 var userInput = Console.ReadLine();
+                Console.WriteLine();
                 switch (userInput)
                 {
                     case "0":
@@ -144,6 +168,18 @@ namespace LAB3
                         else
                         {
                             Console.WriteLine("Wrong Input");
+                        }
+
+                        break;
+                    case "6":
+                        if (_state == State.SwimmersAreReady)
+                        {
+                            SortBySalariesFromZeroToMax();
+                            Console.WriteLine("Sorted!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Wrong Input.");
                         }
 
                         break;

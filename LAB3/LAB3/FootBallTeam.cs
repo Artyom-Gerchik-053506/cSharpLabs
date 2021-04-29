@@ -6,7 +6,7 @@ namespace LAB3
     {
         public const int numberOfPlayers = 30;
 
-        public FootBallPlayer[] Players;
+        public Sportsman[] Players;
         //add if need
         /*public Sportsman[] Coaches;
         public Human[] Doctors;
@@ -26,7 +26,7 @@ namespace LAB3
 
         public FootBallPlayer this[int index]
         {
-            get => Players[index];
+            get => (FootBallPlayer) Players[index];
             set => Players[index] = value;
         }
 
