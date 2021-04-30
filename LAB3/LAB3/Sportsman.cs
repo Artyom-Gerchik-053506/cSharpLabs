@@ -2,7 +2,7 @@ namespace LAB3
 {
     public class Sportsman : Human
     {
-        public new static string ID => nameof(Sportsman);
+        public new static string Id => nameof(Sportsman);
 
         //this is a field.
         private int _salary;
@@ -27,15 +27,15 @@ namespace LAB3
 
         public new string Description()
         {
-            return Description(descriptionInfoState.Default);
+            return Description(DescriptionInfoState.Default);
         }
 
-        public override string Description(descriptionInfoState state)
+        public override string Description(DescriptionInfoState state)
         {
-            return $"{base.Description(state)}\nClass Description {ID}: Salary: {Salary.ToString()}";
+            return $"{base.Description(state)}\nClass Description {Id}: Salary: {Salary.ToString()}";
         }
 
-        protected override string specificInfo()
+        protected override string SpecificInfo()
         {
             return "";
         }

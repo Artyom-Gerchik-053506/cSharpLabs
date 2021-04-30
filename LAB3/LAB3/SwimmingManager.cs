@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace LAB3
@@ -8,25 +7,25 @@ namespace LAB3
     {
         private const int CountOfSwimmers = 5;
         private State _state = State.Initial;
-        private readonly Swimmer[] arrayOfSwimmers = new Swimmer[CountOfSwimmers];
+        private readonly Swimmer[] _arrayOfSwimmers = new Swimmer[CountOfSwimmers];
 
         private void SortBySalariesFromZeroToMax()
         {
-            Array.Sort(arrayOfSwimmers, new SwimmersSlariesComparer());
+            Array.Sort(_arrayOfSwimmers, new SwimmersSlariesComparer());
         }
 
         private Swimmer.Anthropology generateRandomAntropology()
         {
             var random = new Random();
             Swimmer.Anthropology anthropologyStruct;
-            anthropologyStruct.footSize = Math.Round(random.NextDouble(), 2);
-            anthropologyStruct.palmSize = Math.Round(random.NextDouble(), 2);
-            anthropologyStruct.lungVolume = Math.Round(random.NextDouble(), 2);
-            anthropologyStruct.shoulderWidth = Math.Round(random.NextDouble(), 2);
+            anthropologyStruct.FootSize = Math.Round(random.NextDouble(), 2);
+            anthropologyStruct.PalmSize = Math.Round(random.NextDouble(), 2);
+            anthropologyStruct.LungVolume = Math.Round(random.NextDouble(), 2);
+            anthropologyStruct.ShoulderWidth = Math.Round(random.NextDouble(), 2);
             return anthropologyStruct;
         }
 
-        public bool PerformInterface(IMyOwnInterfaceForSwimmers myObject)
+        private bool PerformInterface(IMyOwnInterfaceForSwimmers myObject)
         {
             return myObject.ChokedWithWater();
         }
@@ -55,20 +54,20 @@ namespace LAB3
                     swimmer[Swimmer.SwimmingStyle.Butterfly] = Math.Round(randomButterfly + 0.6, 2);
                 }
 
-                arrayOfSwimmers[index] = swimmer;
+                _arrayOfSwimmers[index] = swimmer;
             }
         }
 
         private void InfoAboutSwimmers()
         {
             for (var index = 0; index < CountOfSwimmers; index++)
-                Console.WriteLine($"{arrayOfSwimmers[index].Description()}\n");
+                Console.WriteLine($"{_arrayOfSwimmers[index].Description()}\n");
         }
 
-        private void InfoAboutSwimmers(Human.descriptionInfoState state)
+        private void InfoAboutSwimmers(Human.DescriptionInfoState state)
         {
             for (var index = 0; index < CountOfSwimmers; index++)
-                Console.WriteLine($"{arrayOfSwimmers[index].Description(state)}\n");
+                Console.WriteLine($"{_arrayOfSwimmers[index].Description(state)}\n");
         }
 
         private void ShowUserMenu()
@@ -93,7 +92,7 @@ namespace LAB3
 
         private void SwimWithChoosenStyle(Swimmer.SwimmingStyle style)
         {
-            var arrayOfSwimmersOrdered = arrayOfSwimmers.OrderBy(a => a[style]).ToArray();
+            var arrayOfSwimmersOrdered = _arrayOfSwimmers.OrderBy(a => a[style]).ToArray();
             for (var index = 2; index != -1; index--)
                 Console.WriteLine(
                     $"Place: {(index + 1).ToString()} Time: {arrayOfSwimmersOrdered[index][style].ToString()} Name: {arrayOfSwimmersOrdered[index].Name}");
@@ -130,7 +129,7 @@ namespace LAB3
                     case "2":
                         if (_state == State.SwimmersAreReady)
                         {
-                            InfoAboutSwimmers(Human.descriptionInfoState.ShowAge);
+                            InfoAboutSwimmers(Human.DescriptionInfoState.ShowAge);
                         }
                         else
                         {
@@ -141,7 +140,7 @@ namespace LAB3
                     case "3":
                         if (_state == State.SwimmersAreReady)
                         {
-                            InfoAboutSwimmers(Human.descriptionInfoState.SpecificInfo);
+                            InfoAboutSwimmers(Human.DescriptionInfoState.SpecificInfo);
                         }
                         else
                         {

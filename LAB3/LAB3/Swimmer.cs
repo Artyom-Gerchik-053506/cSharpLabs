@@ -27,13 +27,13 @@ namespace LAB3
 
         public struct Anthropology
         {
-            public double footSize;
-            public double palmSize;
-            public double lungVolume;
-            public double shoulderWidth;
+            public double FootSize;
+            public double PalmSize;
+            public double LungVolume;
+            public double ShoulderWidth;
         }
 
-        private readonly double[] swimmingStyleTiming100Meters =
+        private readonly double[] _swimmingStyleTiming100Meters =
             new double[Enum.GetValues(typeof(SwimmingStyle)).Length];
 
         public Anthropology SwimmerAnthropology;
@@ -47,30 +47,30 @@ namespace LAB3
 
         public double this[SwimmingStyle style]
         {
-            get => swimmingStyleTiming100Meters[(int) style];
-            set => swimmingStyleTiming100Meters[(int) style] = value;
+            get => _swimmingStyleTiming100Meters[(int) style];
+            set => _swimmingStyleTiming100Meters[(int) style] = value;
         }
 
-        public new static string ID => nameof(Swimmer);
+        public new static string Id => nameof(Swimmer);
 
         public new string Description()
         {
-            return Description(descriptionInfoState.Default);
+            return Description(DescriptionInfoState.Default);
         }
 
-        public override string Description(descriptionInfoState state)
+        public override string Description(DescriptionInfoState state)
         {
-            return $"{base.Description(state)}\nClass Description {ID}: " +
+            return $"{base.Description(state)}\nClass Description {Id}: " +
                    $"100 Meters ButterFly: {this[SwimmingStyle.Butterfly].ToString()}, " +
                    $"100 Meters FreeStyle: {this[SwimmingStyle.Freestyle].ToString()},\n ";
         }
 
-        protected override string specificInfo()
+        protected override string SpecificInfo()
         {
-            return $"\nAntropology metrics:\nFoot Size: {SwimmerAnthropology.footSize.ToString()},\n" +
-                   $"Palm Size: {SwimmerAnthropology.palmSize.ToString()},\n" +
-                   $"Lung Volume: {SwimmerAnthropology.lungVolume.ToString()},\n" +
-                   $"Shoulder Width: {SwimmerAnthropology.shoulderWidth.ToString()}.";
+            return $"\nAntropology metrics:\nFoot Size: {SwimmerAnthropology.FootSize.ToString()},\n" +
+                   $"Palm Size: {SwimmerAnthropology.PalmSize.ToString()},\n" +
+                   $"Lung Volume: {SwimmerAnthropology.LungVolume.ToString()},\n" +
+                   $"Shoulder Width: {SwimmerAnthropology.ShoulderWidth.ToString()}.";
         }
     }
 }

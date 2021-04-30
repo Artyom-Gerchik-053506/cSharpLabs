@@ -4,7 +4,7 @@ namespace LAB3
 {
     public class FootBallTeam
     {
-        public const int numberOfPlayers = 30;
+        public const int NumberOfPlayers = 30;
 
         public Sportsman[] Players;
         //add if need
@@ -15,7 +15,7 @@ namespace LAB3
         public FootBallTeam(string name)
         {
             Name = name;
-            Players = new FootBallPlayer[numberOfPlayers];
+            Players = new FootBallPlayer[NumberOfPlayers];
             //add if need
             /*Coaches = new Sportsman[3];
             Doctors = new Human[2];
@@ -30,11 +30,11 @@ namespace LAB3
             set => Players[index] = value;
         }
 
-        public void Description(Human.descriptionInfoState state)
+        public void Description(Human.DescriptionInfoState state)
         {
             Console.WriteLine($"Name Of Team: {Name}\n");
             //info about footballists
-            for (var index = 0; index < numberOfPlayers; index++)
+            for (var index = 0; index < NumberOfPlayers; index++)
                 Console.WriteLine($"{this[index].Description(state)}\n");
         }
     }

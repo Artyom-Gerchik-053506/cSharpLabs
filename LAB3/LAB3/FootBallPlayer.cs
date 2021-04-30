@@ -29,10 +29,10 @@ namespace LAB3
 
         public struct Anthropology
         {
-            public double footSize;
-            public double jumpHeight;
-            public double jumpLength;
-            public int heartBeatAfter100MetersSprint;
+            public double FootSize;
+            public double JumpHeight;
+            public double JumpLength;
+            public int HeartBeatAfter100MetersSprint;
         }
 
         public Anthropology FootBallPlayerAnthropology;
@@ -48,28 +48,28 @@ namespace LAB3
             Salary = salary;
         }
 
-        public new static string ID => nameof(FootBallPlayer);
+        public new static string Id => nameof(FootBallPlayer);
         public int NumberOnTShirt { get; set; }
         public Position BestPlayingPosition { get; set; }
         public double Sprint100Meters { get; set; }
 
         public new string Description()
         {
-            return Description(descriptionInfoState.Default);
+            return Description(DescriptionInfoState.Default);
         }
 
-        public override string Description(descriptionInfoState state)
+        public override string Description(DescriptionInfoState state)
         {
             return
-                $"{base.Description(state)}\nClass Description {ID}: Position: {BestPlayingPosition.ToString("G")}, Sprint 100 Meters: {Sprint100Meters.ToString()}, Number on T-Shirt: {NumberOnTShirt.ToString()}";
+                $"{base.Description(state)}\nClass Description {Id}: Position: {BestPlayingPosition.ToString("G")}, Sprint 100 Meters: {Sprint100Meters.ToString()}, Number on T-Shirt: {NumberOnTShirt.ToString()}";
         }
 
-        protected override string specificInfo()
+        protected override string SpecificInfo()
         {
-            return $"\nAntropology metrics:\nFoot Size: {FootBallPlayerAnthropology.footSize.ToString()},\n" +
-                   $"Jump Height: {FootBallPlayerAnthropology.jumpHeight.ToString()},\n" +
-                   $"Jump Length: {FootBallPlayerAnthropology.jumpLength.ToString()},\n" +
-                   $"Heart Beat After 100 Meters Sprint: {FootBallPlayerAnthropology.heartBeatAfter100MetersSprint.ToString()}.";
+            return $"\nAntropology metrics:\nFoot Size: {FootBallPlayerAnthropology.FootSize.ToString()},\n" +
+                   $"Jump Height: {FootBallPlayerAnthropology.JumpHeight.ToString()},\n" +
+                   $"Jump Length: {FootBallPlayerAnthropology.JumpLength.ToString()},\n" +
+                   $"Heart Beat After 100 Meters Sprint: {FootBallPlayerAnthropology.HeartBeatAfter100MetersSprint.ToString()}.";
         }
     }
 }

@@ -4,9 +4,9 @@ namespace LAB3
 {
     public class FootBallManager : Manager
     {
-        private State state = State.Initial;
-        private FootBallTeam team1;
-        private FootBallTeam team2;
+        private State _state = State.Initial;
+        private FootBallTeam _team1;
+        private FootBallTeam _team2;
 
         public bool PerformInterface(IMyOwnInterfaceForFootBallPlayers myObject)
         {
@@ -24,17 +24,17 @@ namespace LAB3
         {
             var random = new Random();
             FootBallPlayer.Anthropology anthropologyStruct;
-            anthropologyStruct.footSize = Math.Round(random.NextDouble(), 2);
-            anthropologyStruct.jumpHeight = Math.Round(random.NextDouble(), 2);
-            anthropologyStruct.jumpLength = Math.Round(random.NextDouble(), 2);
-            anthropologyStruct.heartBeatAfter100MetersSprint = random.Next(60, 140);
+            anthropologyStruct.FootSize = Math.Round(random.NextDouble(), 2);
+            anthropologyStruct.JumpHeight = Math.Round(random.NextDouble(), 2);
+            anthropologyStruct.JumpLength = Math.Round(random.NextDouble(), 2);
+            anthropologyStruct.HeartBeatAfter100MetersSprint = random.Next(60, 140);
             return anthropologyStruct;
         }
 
-        private FootBallTeam GenerateRandomTeam(string Name)
+        private FootBallTeam GenerateRandomTeam(string name)
         {
-            var Team = new FootBallTeam(Name);
-            for (var index = 0; index < FootBallTeam.numberOfPlayers; index++)
+            var team = new FootBallTeam(name);
+            for (var index = 0; index < FootBallTeam.NumberOfPlayers; index++)
             {
                 var random = new Random();
                 var randomSprint100Meters = Math.Round(random.NextDouble() * 10 + 5, 2);
@@ -50,10 +50,10 @@ namespace LAB3
                     player.Sprint100Meters = 100500;
                 }
 
-                Team[index] = player;
+                team[index] = player;
             }
 
-            return Team;
+            return team;
         }
 
         public string PlayVersus(FootBallTeam team1, FootBallTeam team2)
@@ -66,7 +66,7 @@ namespace LAB3
 
         private void ShowUserMenu()
         {
-            switch (state)
+            switch (_state)
             {
                 case State.Initial:
                     Console.WriteLine("0 - Back");
@@ -96,23 +96,23 @@ namespace LAB3
                         footBallManagerControlsUserInput = false;
                         break;
                     case "1":
-                        switch (state)
+                        switch (_state)
                         {
                             case State.Initial:
-                                team1 = GenerateRandomTeam("Team1");
-                                team2 = GenerateRandomTeam("Team2");
-                                state = State.TeamsGenerated;
+                                _team1 = GenerateRandomTeam("Team1");
+                                _team2 = GenerateRandomTeam("Team2");
+                                _state = State.TeamsGenerated;
                                 break;
                             case State.TeamsGenerated:
-                                Console.WriteLine(PlayVersus(team1, team2));
+                                Console.WriteLine(PlayVersus(_team1, _team2));
                                 break;
                         }
 
                         break;
                     case "2":
-                        if (state == State.TeamsGenerated)
+                        if (_state == State.TeamsGenerated)
                         {
-                            team1.Description(Human.descriptionInfoState.ShowAge);
+                            _team1.Description(Human.DescriptionInfoState.ShowAge);
                         }
                         else
                         {
@@ -121,9 +121,9 @@ namespace LAB3
 
                         break;
                     case "3":
-                        if (state == State.TeamsGenerated)
+                        if (_state == State.TeamsGenerated)
                         {
-                            team2.Description(Human.descriptionInfoState.ShowAge);
+                            _team2.Description(Human.DescriptionInfoState.ShowAge);
                         }
                         else
                         {
@@ -132,9 +132,9 @@ namespace LAB3
 
                         break;
                     case "4":
-                        if (state == State.TeamsGenerated)
+                        if (_state == State.TeamsGenerated)
                         {
-                            team1.Description(Human.descriptionInfoState.SpecificInfo);
+                            _team1.Description(Human.DescriptionInfoState.SpecificInfo);
                         }
                         else
                         {
@@ -143,9 +143,9 @@ namespace LAB3
 
                         break;
                     case "5":
-                        if (state == State.TeamsGenerated)
+                        if (_state == State.TeamsGenerated)
                         {
-                            team2.Description(Human.descriptionInfoState.SpecificInfo);
+                            _team2.Description(Human.DescriptionInfoState.SpecificInfo);
                         }
                         else
                         {
