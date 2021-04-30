@@ -4,6 +4,11 @@ namespace LAB3
 {
     public class FootBallManager : Manager
     {
+        public bool PerformFight(IMyOwnInterfaceForFootBallTeam myTeam)
+        {
+            return myTeam.Fight();
+        }
+        
         private State _state = State.Initial;
         private FootBallTeam _team1;
         private FootBallTeam _team2;
@@ -48,6 +53,7 @@ namespace LAB3
                 if (PerformInterface(player))
                 {
                     player.Sprint100Meters = 100500;
+                    player.FootBallPlayerAnthropology.HeartBeatAfter100MetersSprint = 228;
                 }
 
                 team[index] = player;
@@ -58,6 +64,11 @@ namespace LAB3
 
         public string PlayVersus(FootBallTeam team1, FootBallTeam team2)
         {
+            if (PerformFight(team1) && PerformFight(team2))
+            {
+                return "Fight On The Field, Game Canceled!";
+            }
+            
             var randomScore = new Random();
             var team1Goals = randomScore.Next(0, 5);
             var team2Goals = randomScore.Next(0, 5);

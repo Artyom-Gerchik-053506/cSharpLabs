@@ -2,8 +2,22 @@ using System;
 
 namespace LAB3
 {
-    public class FootBallTeam
+    public class FootBallTeam : IMyOwnInterfaceForFootBallTeam
     {
+        
+        public bool Fight()
+        {
+            var random = new Random();
+            if (random.Next(0, 2) == 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        
         public const int NumberOfPlayers = 30;
 
         public Sportsman[] Players;
