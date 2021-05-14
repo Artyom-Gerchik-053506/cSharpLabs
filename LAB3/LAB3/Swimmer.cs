@@ -4,6 +4,23 @@ namespace LAB3
 {
     public class Swimmer : Sportsman, IMyOwnInterfaceForSwimmers
     {
+        public delegate void Finished100MetersDistance();
+        public event Finished100MetersDistance Finished;
+            
+        
+        public float SwimmedDistance(SwimmingStyle style,float time)
+        {
+            float time100Meters = Convert.ToSingle(this[style]);
+            var result = (time * 100) / time100Meters; //how many meters swimmed on certain time
+            if (result >= 100)
+            {
+                Finished?.Invoke();
+            }
+            //Console.WriteLine("Hellow from swimmer "); // logs
+            // Console.WriteLine(result); // logs
+            return result;
+        }
+
         public bool ChokedWithWater()
         {
             var random = new Random();

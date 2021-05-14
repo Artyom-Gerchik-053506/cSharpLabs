@@ -1,13 +1,19 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace LAB3
 {
     public class SwimmingManager : Manager
     {
-        private const int CountOfSwimmers = 5;
+        private static int CountOfSwimmers = 5;
         private State _state = State.Initial;
-        private readonly Swimmer[] _arrayOfSwimmers = new Swimmer[CountOfSwimmers];
+        private Swimmer[] _arrayOfSwimmers = new Swimmer[CountOfSwimmers];
+
+        public delegate void SwimmedDistance(Swimmer.SwimmingStyle style, float time);
+
+        public event SwimmedDistance Timer;
 
         private void SortBySalariesFromZeroToMax()
         {
@@ -30,30 +36,57 @@ namespace LAB3
             return myObject.ChokedWithWater();
         }
 
-        private void GenerateSwimmers()
+        void checkIfSetupisOK()
         {
-            for (var index = 0; index < CountOfSwimmers; index++)
+            if (CountOfSwimmers != 5)
+            {
+                throw new Exception("CountOfSwimmers is not setted");
+            }
+        }
+
+        private delegate void SwimmerAdditionalConfigurator(Swimmer swimmer);
+
+        private void additionalConfig(Swimmer swimmer)
+        {
+            var random = new Random();
+            var randomButterfly = random.NextDouble();
+            var randomFreestyle = random.NextDouble();
+            swimmer.SwimmerAnthropology = generateRandomAntropology();
+            if (PerformInterface(swimmer))
+            {
+                swimmer[Swimmer.SwimmingStyle.Freestyle] = Math.Round(randomFreestyle + 8, 2);
+                swimmer[Swimmer.SwimmingStyle.Butterfly] = Math.Round(randomButterfly + 9, 2);
+            }
+            else
+            {
+                swimmer[Swimmer.SwimmingStyle.Freestyle] = Math.Round(randomFreestyle + 3, 2);
+                swimmer[Swimmer.SwimmingStyle.Butterfly] = Math.Round(randomButterfly + 4, 2);
+            }
+        }
+
+        private void GenerateSwimmers(SwimmerAdditionalConfigurator swimmerConfig)
+        {
+            
+                try
+                {
+                    checkIfSetupisOK();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    CountOfSwimmers = 5;
+                    _arrayOfSwimmers = new Swimmer[CountOfSwimmers];
+                }
+
+                for (var index = 0; index < CountOfSwimmers; index++)
             {
                 var random = new Random();
-                var randomButterfly = random.NextDouble();
-                var randomFreestyle = random.NextDouble();
                 var randomAge = random.Next(16, 35);
                 //inserting a negative values to check property works good.
                 var randomSalary = random.Next(-1000, 3000);
                 var randomNameIndex = random.Next(0, ArrayOfRandomNamesForGenerate.Count);
                 var swimmer = new Swimmer(ArrayOfRandomNamesForGenerate[randomNameIndex], randomAge, randomSalary);
-                swimmer.SwimmerAnthropology = generateRandomAntropology();
-                if (PerformInterface(swimmer))
-                {
-                    swimmer[Swimmer.SwimmingStyle.Freestyle] = Math.Round(randomFreestyle + 5, 2);
-                    swimmer[Swimmer.SwimmingStyle.Butterfly] = Math.Round(randomButterfly + 6, 2);
-                }
-                else
-                {
-                    swimmer[Swimmer.SwimmingStyle.Freestyle] = Math.Round(randomFreestyle + 0.5, 2);
-                    swimmer[Swimmer.SwimmingStyle.Butterfly] = Math.Round(randomButterfly + 0.6, 2);
-                }
-
+                swimmerConfig(swimmer);
                 _arrayOfSwimmers[index] = swimmer;
             }
         }
@@ -90,10 +123,108 @@ namespace LAB3
             }
         }
 
+        public string asterixOffset(float distance) // max 100
+        {
+            var resulotion = 100;
+            string result = "|";
+            float share = distance / 100;
+            //Console.WriteLine($"Share: {share.ToString()}; // logs
+            for (int i = 0; i < resulotion; i++)
+            {
+                float temp = i;
+                // Console.WriteLine($"temp / resulotion : {(temp / resulotion).ToString()}"); // logs
+                // Console.WriteLine($"temp+1 / resulotion : {((temp + 1.0) / resulotion).ToString()}"); // logs
+                if (temp / resulotion <= share && share <= (temp + 1.0) / resulotion)
+                {
+                    result += "*";
+                }
+                else
+                {
+                    result += " ";
+                }
+            }
+
+            result += "|";
+            return result;
+        }
+
+        private void ConsoleOutput(List<float> distanceArray)
+        {
+            var resultString = "";
+            for (int index = 0; index < distanceArray.Count; index++)
+            {
+                float distanceForCurrentSwimmer = distanceArray[index];
+                distanceForCurrentSwimmer = Math.Min(distanceForCurrentSwimmer, 100);
+                resultString += asterixOffset(distanceForCurrentSwimmer);
+                resultString += "\n";
+            }
+
+            //Console.Clear();
+            Console.SetCursorPosition(0, Console.CursorTop - distanceArray.Count);
+            Console.Write(resultString);
+        }
+
+        private void testBeforeSwimming()
+        {
+            List<Swimmer> swimmersForDelete = new List<Swimmer>();
+            Wada wada = new Wada();
+            for (int index = 0; index < _arrayOfSwimmers.Length; index++)
+            {
+                try
+                {
+                    wada.checkForDoping(_arrayOfSwimmers[index]);
+                }
+                catch (Exception E)
+                {
+                    Console.WriteLine($"{E.Message} For {_arrayOfSwimmers[index].Name}");
+                    swimmersForDelete.Add(_arrayOfSwimmers[index]);
+                }
+            }
+
+            for (int jindex = 0; jindex < swimmersForDelete.Count; jindex++)
+            {
+                Swimmer temp = swimmersForDelete[jindex];
+                _arrayOfSwimmers = _arrayOfSwimmers.Where((source, index) => source != temp).ToArray();
+                CountOfSwimmers--;
+            }
+        }
+
         private void SwimWithChoosenStyle(Swimmer.SwimmingStyle style)
         {
+            testBeforeSwimming();
+            // Add empty lines
+            foreach (var swimmer in _arrayOfSwimmers)
+            {
+                Console.WriteLine("");
+            }
+
+            Dictionary<Swimmer, bool> SwimmersFinsihed100Meters = new Dictionary<Swimmer, bool>();
+            List<float> distancesList = new List<float>();
+            for (int index = 0; index < _arrayOfSwimmers.Length; index++)
+            {
+                var swimmer = _arrayOfSwimmers[index];
+                Timer += delegate(Swimmer.SwimmingStyle style, float time)
+                {
+                    var distance = swimmer.SwimmedDistance(style, time);
+                    distancesList.Add(distance);
+                };
+                swimmer.Finished += () => SwimmersFinsihed100Meters[swimmer] = true;
+            }
+
+            int step = 1;
+            while (SwimmersFinsihed100Meters.Count < _arrayOfSwimmers.Length)
+            {
+                float timerStep = (float) 1;
+                Timer?.Invoke(style, timerStep * step);
+                ConsoleOutput(distancesList);
+                distancesList.Clear();
+                step++;
+                Thread.Sleep(1000 * (int) timerStep);
+            }
+
+            // TODO delete from Timer delagates ???
             var arrayOfSwimmersOrdered = _arrayOfSwimmers.OrderBy(a => a[style]).ToArray();
-            for (var index = 2; index != -1; index--)
+            for (var index = CountOfSwimmers - 1; index >= 0; index--)
                 Console.WriteLine(
                     $"Place: {(index + 1).ToString()} Time: {arrayOfSwimmersOrdered[index][style].ToString()} Name: {arrayOfSwimmersOrdered[index].Name}");
         }
@@ -117,7 +248,7 @@ namespace LAB3
                         switch (_state)
                         {
                             case State.Initial:
-                                GenerateSwimmers();
+                                GenerateSwimmers(swimmer => additionalConfig(swimmer));
                                 _state = State.SwimmersAreReady;
                                 break;
                             case State.SwimmersAreReady:

@@ -1,7 +1,17 @@
+using System;
+
 namespace LAB3
 {
-    public abstract class Human
+    public abstract class Human : ITakeBlood
     {
+        public Blood takeBlood()
+        {
+            Random rnd = new Random();
+            Blood temp = new Blood();
+            temp.ID = rnd.Next();
+            return temp;
+        }
+
         public enum DescriptionInfoState
         {
             Default,
